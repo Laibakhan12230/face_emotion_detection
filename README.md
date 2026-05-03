@@ -1,2 +1,27 @@
-# face_emotion_detection
-A deep learning-based application that detects and classifies human facial emotions in real-time using Convolutional Neural Networks (CNN). The system analyzes facial expressions from images or webcam input and predicts emotions such as happiness, sadness, anger, surprise, and more.
+# 😊 Face Emotion Detection System
+
+## 📌 Overview
+This project is a **Face Emotion Detection System** that identifies human emotions from facial expressions using Machine Learning / Deep Learning techniques.  
+It can classify emotions like **Happy, Sad, Angry, Surprise, Neutral**, etc.
+
+---
+
+## 🚀 Features
+- 🎯 Real-time emotion detection
+- 🧠 Deep Learning / CNN-based model
+- 📷 Works with images (and can be extended to webcam)
+- 📊 Accurate classification of facial expressions
+- ⚡ Easy to use and customizable
+
+---
+
+## 🛠️ Tech Stack
+- Python 🐍
+- OpenCV
+- TensorFlow / Keras (or your model library)
+- NumPy
+- Matplotlib
+
+---
+
+## 📂 Project Structure
