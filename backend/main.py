@@ -21,7 +21,7 @@ app.add_middleware(
 model = load_model("emotion_model.h5")
 
 # MONGODB
-client = MongoClient("mongodb://localhost:27017")
+client = MongoClient("mongodb+srv://Laiba_khan:@Laibanaaz1234@cluster0.839rxof.mongodb.net/?appName=Cluster0")
 
 DB = client["emotion_ai"]
 
