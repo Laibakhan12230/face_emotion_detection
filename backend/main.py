@@ -18,7 +18,7 @@ app.add_middleware(
 )
 
 # LOAD MODEL
-model = load_model("emotion_model.h5")
+load_model("emotion_model_fixed.h5", compile=False)
 
 # MONGODB
 client = MongoClient("mongodb+srv://Laiba_khan:@Laibanaaz1234@cluster0.839rxof.mongodb.net/?appName=Cluster0")
