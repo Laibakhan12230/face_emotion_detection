@@ -5,9 +5,12 @@ from pymongo import MongoClient
 from PIL import Image
 import numpy as np
 import io
+import os
 
 app = FastAPI()
-
+@app.get("/")
+def home():
+    return {"message": "Backend Working Successfully"}
 # CORS
 app.add_middleware(
     CORSMiddleware,
@@ -18,16 +21,18 @@ app.add_middleware(
 )
 
 # LOAD MODEL
-model = load_model("emotion_model.h5", compile=False)
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "emotion_model.h5")
+
+model = load_model(MODEL_PATH, compile=False)
 
 # MONGODB
-client = MongoClient("mongodb+srv://Laiba_khan:Laibanaaz1234@cluster0.839rxof.mongodb.net/?appName=Cluster0")
+#client = MongoClient("mongodb+srv://Laiba_khan:Laibanaaz1234@cluster0.839rxof.mongodb.net/?appName=Cluster0")
 
-DB = client["emotion_ai"]
+#DB = client["emotion_ai"]
 
-users_collection = DB["users"]
+#users_collection = DB["users"]
 
-history_collection = DB["history"]
+#history_collection = DB["history"]
 
 # EMOTIONS
 emotions = [
