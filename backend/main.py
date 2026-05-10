@@ -30,7 +30,8 @@ MODEL_PATH = os.path.join(
 
 model = load_model(
     MODEL_PATH,
-    compile=False
+    compile=False,
+    safe_mode=False
 )
 
 # MONGODB ATLAS
