@@ -1,6 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from tensorflow.keras.models import load_model
+#from tensorflow.keras.models import load_model
 from pymongo import MongoClient
 from PIL import Image
 import numpy as np
@@ -21,9 +21,9 @@ app.add_middleware(
 )
 
 # LOAD MODEL
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "emotion_model.h5")
+#MODEL_PATH = os.path.join(os.path.dirname(__file__), "emotion_model.h5")
 
-model = load_model(MODEL_PATH, compile=False)
+#model = load_model(MODEL_PATH, compile=False)
 
 # MONGODB
 #client = MongoClient("mongodb+srv://Laiba_khan:Laibanaaz1234@cluster0.839rxof.mongodb.net/?appName=Cluster0")
@@ -96,8 +96,8 @@ async def login(data: dict):
     }
 
 # PREDICT
-@app.post("/predict")
-async def predict(file: UploadFile = File(...)):
+#@app.post("/predict")
+#async def predict(file: UploadFile = File(...)):
 
     image_bytes = await file.read()
 
