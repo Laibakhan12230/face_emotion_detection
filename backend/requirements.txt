@@ -1,7 +1,8 @@
 fastapi
 uvicorn
-tensorflow
+tensorflow-cpu==2.15.0
 numpy
 pillow
 python-multipart
 pymongo
+h5py
