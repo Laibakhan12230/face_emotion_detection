@@ -1,6 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-#from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model
 from pymongo import MongoClient
 from PIL import Image
 import numpy as np
@@ -8,10 +8,9 @@ import io
 import os
 
 app = FastAPI()
-@app.get("/")
-def home():
-    return {"message": "Backend Working Successfully"}
+
 # CORS
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,21 +19,34 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# MODEL PATH
+
+MODEL_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "emotion_model.h5"
+)
+
 # LOAD MODEL
-#MODEL_PATH = os.path.join(os.path.dirname(__file__), "emotion_model.h5")
 
-#model = load_model(MODEL_PATH, compile=False)
+model = load_model(
+    MODEL_PATH,
+    compile=False
+)
 
-# MONGODB
-#client = MongoClient("mongodb+srv://Laiba_khan:Laibanaaz1234@cluster0.839rxof.mongodb.net/?appName=Cluster0")
+# MONGODB ATLAS
 
-#DB = client["emotion_ai"]
+client = MongoClient(
+    "mongodb+srv://Laiba_khan:Laibanaaz1234@cluster0.839rxof.mongodb.net/?appName=Cluster0"
+)
 
-#users_collection = DB["users"]
+DB = client["emotion_ai"]
 
-#history_collection = DB["history"]
+users_collection = DB["users"]
+
+history_collection = DB["history"]
 
 # EMOTIONS
+
 emotions = [
     "Angry",
     "Disgust",
@@ -45,13 +57,21 @@ emotions = [
     "Surprise"
 ]
 
+# HOME ROUTE
+
+@app.get("/")
+def home():
+
+    return {
+        "status": "Backend Running Successfully"
+    }
+
 # SIGNUP
+
 @app.post("/signup")
 async def signup(data: dict):
 
     email = data["email"]
-
-    password = data["password"]
 
     user = users_collection.find_one({
         "email": email
@@ -64,8 +84,8 @@ async def signup(data: dict):
         }
 
     users_collection.insert_one({
-        "email": email,
-        "password": password
+        "email": data["email"],
+        "password": data["password"]
     })
 
     return {
@@ -73,16 +93,13 @@ async def signup(data: dict):
     }
 
 # LOGIN
+
 @app.post("/login")
 async def login(data: dict):
 
-    email = data["email"]
-
-    password = data["password"]
-
     user = users_collection.find_one({
-        "email": email,
-        "password": password
+        "email": data["email"],
+        "password": data["password"]
     })
 
     if user:
@@ -95,29 +112,31 @@ async def login(data: dict):
         "message": "invalid"
     }
 
-# PREDICT
-#@app.post("/predict")
-#async def predict(file: UploadFile = File(...)):
+# PREDICT EMOTION
+
+@app.post("/predict")
+async def predict(file: UploadFile = File(...)):
 
     image_bytes = await file.read()
 
     image = Image.open(
         io.BytesIO(image_bytes)
-    ).convert('L')
+    ).convert("L")
 
-    image = image.resize((48,48))
+    image = image.resize((48, 48))
 
     image = np.array(image).astype("float32") / 255.0
 
-    image = image.reshape(1,48,48,1)
+    image = image.reshape(1, 48, 48, 1)
 
-    pred = model.predict(image)
+    prediction = model.predict(image)
 
-    confidence = float(np.max(pred))
+    confidence = float(np.max(prediction))
 
-    label = emotions[np.argmax(pred)]
+    label = emotions[np.argmax(prediction)]
 
     # SAVE HISTORY
+
     history_collection.insert_one({
         "emotion": label,
         "confidence": confidence
@@ -129,21 +148,31 @@ async def login(data: dict):
     }
 
 # HISTORY
-@app.get("/history")
-def get_history():
 
-    history = []
+@app.get("/history")
+def history():
+
+    history_data = []
 
     data = history_collection.find()
 
     for item in data:
 
-        history.append({
+        history_data.append({
             "emotion": item["emotion"],
             "confidence": item["confidence"]
         })
 
-    return history
+    return history_data
+
+# RUN SERVER
+
 if __name__ == "__main__":
+
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=10000)
+
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=8000
+    )
