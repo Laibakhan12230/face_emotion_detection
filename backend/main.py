@@ -36,9 +36,10 @@ print("Model loaded successfully")
 # MONGODB ATLAS
 
 client = MongoClient(
-    "mongodb+srv://Laiba_khan:Laibanaaz1234@cluster0.839rxof.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://Laiba_khan:Laibanaaz1234@cluster0.839rxof.mongodb.net/emotion_ai?retryWrites=true&w=majority",
+    tls=True,
+    tlsAllowInvalidCertificates=True
 )
-
 DB = client["emotion_ai"]
 
 users_collection = DB["users"]
