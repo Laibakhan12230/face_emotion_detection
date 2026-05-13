@@ -1,9 +1,11 @@
-fastapi==0.110.0
-uvicorn==0.27.1
-python-multipart==0.0.9
-pillow==10.0.1
-numpy==1.23.5
+fastapi==0.95.2
+uvicorn==0.22.0
 tensorflow-cpu==2.15.0
 keras==2.15.0
-h5py==3.10.0
+numpy==1.26.4
+pillow==10.2.0
+python-multipart==0.0.9
 pymongo==4.6.2
+h5py==3.10.0
+typing-extensions==4.9.0
+scipy==1.11.4

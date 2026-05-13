@@ -4,7 +4,7 @@ from tensorflow.keras.layers import *
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
-DATASET_PATH = "processed_dataset"
+DATASET_PATH = r"C:\Users\HP\Downloads\face\processed_dataset"
 
 # Data Augmentation
 datagen = ImageDataGenerator(
@@ -96,7 +96,7 @@ model.fit(
 )
 
 # Save Model
-model.save("emotion_model.h5")
+model.save("final_emotion_model.h5")
 
 print("\n✅ Model Trained Successfully")
 print("✅ emotion_model.h5 saved")

@@ -1,5 +1,7 @@
-node_modules
-dataset
-processed_dataset
-.venv
-__pycache__
+__pycache__/
+*.pyc
+node_modules/
+tfenv/
+.venv/
+emotion_saved_model.keras
+emotion_model.h5
